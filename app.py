@@ -108,7 +108,15 @@ def change_password():
             flash("Must provide username")
             return redirect("/change_password")
 
-        # Ensure 
+        # Ensure password were submitted
+
+        if not current_password:
+            flash("Must provide current password")
+            return redirect("/change_password")
+
+        if not new_password or not confirm_password:
+            flash("must provide new password")
+            return redirect("/change_password")
 
         # Ensure user and password are correct 
         rows = db.execute("SELECT * FROM users WHERE username = ?", username)
