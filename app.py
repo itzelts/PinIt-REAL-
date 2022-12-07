@@ -12,9 +12,6 @@ from helpers import apology, login_required, lookup, usd
 # Configure application
 app = Flask(__name__)
 
-# Custom filter
-#app.jinja_env.filters["usd"] = usd
-
 # Configure session to use filesystem (instead of signed cookies)
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
@@ -22,11 +19,6 @@ Session(app)
 
 # Configure CS50 Library to use SQLite database
 db = SQL("sqlite:///pinit.db")
-
-# Make sure API key is set
-# if not os.environ.get("API_KEY"):
-#     raise RuntimeError("API_KEY not set")
-
 
 @app.after_request
 def after_request(response):
@@ -55,7 +47,6 @@ def leaderboard():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     """Log user in"""
-
     # Forget any user_id
     session.clear()
 
@@ -85,7 +76,7 @@ def login():
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
 
-        # Redirect user to home page
+        # Redirect user to locations page
         return redirect("/")
 
     # User reached route via GET (as by clicking a link or via redirect)
@@ -96,17 +87,54 @@ def login():
 @login_required
 def logout():
     """Log user out"""
-
     # Forget any user_id
     session.clear()
 
     # Redirect user to login form
-    return redirect("/")
+    return redirect("/login")
+
+
+@app.route("/change_password", methods=["GET", "POST"])
+def change_password():
+    '''Change Password'''
+    if request.method == "POST":
+        username = request.form.get("username")
+        current_password = request.form.get("current_password")
+        new_password = request.form.get("new_password")
+        confirm_password = request.form.get("confirm_password")
+
+        # Ensure username was submitted
+        if not username:
+            flash("Must provide username")
+            return redirect("/change_password")
+
+        # Ensure 
+
+        # Ensure user and password are correct 
+        rows = db.execute("SELECT * FROM users WHERE username = ?", username)
+
+        if len(rows) != 1 or not check_password_hash(rows[0]["password"], current_password):
+            return apology("Invalid Username and/or Password")
+        
+        # Ensure passwords match
+        elif new_password != confirm_password:
+            return apology("Passwords Must Match")
+
+        # Hash password
+        hash = generate_password_hash(new_password)
+
+        # Update password
+        db.execute("UPDATE users SET hash = :hash WHERE username=:username", username=username, hash=hash)
+
+        return redirect("/login")
+
+    else:
+        return render_template("change_password.html")
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     """Register user"""
-
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
@@ -115,16 +143,10 @@ def register():
             flash("Must provide username")
             return redirect("/register")
 
-        #if not request.form.get("email"):
-            #return apology("Must provide email", 400)
-
         # Ensure username is not taken
         elif len(db.execute("SELECT * FROM users WHERE username=:username", username=request.form.get("username"))) != 0:
             flash("Username unavailable")
             return redirect("/register")
-
-        #elif not re.fullmatch(r"[^@]+@[^@]+\.[^@]+", request.form.get("email")):
-            #return apology("Must enter a valid email", 400)
 
         # Ensure password was submitted
         elif not request.form.get("password"):
@@ -169,7 +191,7 @@ def register():
         # Remember user
         session["user_id"] = user
 
-        # Rederict user to homepage
+        # Rederict user to locations page
         return redirect("/")
 
     # User reached route via GET
@@ -184,29 +206,29 @@ def upload():
 
     if request.method == "POST":
 
-        # Ensure stock is selected
+        # Ensure name was submitted
         if not request.form.get("name"):
             flash("Must input name")
             return redirect("/upload")
-
-        # Ensure user owns stock
         
-        # Ensure shares is submitted
+        # Ensure description was submitted
         elif not request.form.get("description"):
             flash("Must provide description")
             return redirect("/upload")
 
-
+        # Get users location
         g = geocoder.ip('me')
         lat = g.lat
         long = g.lng
 
+        # Check if location exists in database
+        # If yes, increase rank, else add to database 
         if len(db.execute("SELECT * FROM locations WHERE name=:name", name=request.form.get("name"))) != 0:
             db.execute("UPDATE locations SET rank = rank + 1 WHERE name=:name", name=request.form.get("name"))
         else:
             db.execute("INSERT INTO locations (name, description, lat, long) VALUES (:name, :description, :lat, :long)", name=request.form.get("name"), description=request.form.get("description"), long=long, lat=lat)
 
-        # Redirect user to home page
+        # Redirect user to locations page
         return redirect("/")
 
     else:
