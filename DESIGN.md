@@ -79,6 +79,15 @@ We used a javascript function to upload a map into our website. This funciton is
 We then created a for loop that puts pins on the map based on what locations are in our locations table. 
 We created this map so that users can visualy see what locations are near them. 
 
+CSS
+
+When designing the CSS of our website, we looked at a few examples before we started. One of the ones that stood out was Instagram. 
+On Instagram's login page, they have a grey border around the form, so we took this idea into account on our website. 
+As far as colors, we knew that we both liked blue and that most real and well know websites have a white background, so we implemented these colors. 
+We added images above all the forms to make the website more appealing. We created a nav bar with all our options, so that they are easy to find on all pages.
+We also insured our color scheme was easy to look at and read, this is why there's high contrast between the white text and the blue background/vise versa. 
+
+
 
 
 
