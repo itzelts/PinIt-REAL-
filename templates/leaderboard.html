@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Leaderboard
+{% endblock %}
+
+{% block main %}
+
+ {% for location in locations %}
+    <table class="w3-table-all w3-hoverabl">   
+        <tr style="color:aqua">
+            <th> Name</th>
+            <th> Description </th>
+            <th> Rank </th>
+        </tr>
+            <td>{{ location.name }}</td>
+            <td>{{ location.description }}</td>
+            <td>{{ location.rank }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

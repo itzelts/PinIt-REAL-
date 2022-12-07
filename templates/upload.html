@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Upload
+{% endblock %}
+
+{% block main %}
+<div class="center" style="margin-top: 50px">
+    <div class="flex-container _box">
+        <img class="image" style="width: 30%" src="{{ url_for('static', filename='upload.png')}}">
+        <p class="center simple_text" style="padding-left: 40px; padding-right: 40px;">Found a location you want to
+            share? <br> Upload it below!</p>
+        <form action="/upload" method="post">
+            <div class="mb-3">
+                <input autocomplete="off" autofocus class="form-control mx-auto w-auto input" id="name" name="name"
+                    placeholder="Name" type="text">
+            </div>
+            <div class="mb-3">
+                <input autocomplete="off" class="form-control mx-auto w-auto input" id="description" name="description"
+                    placeholder="Description" type="text">
+            </div>
+            <button class="btn btn-primary" type="submit"> Upload </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
