@@ -49,6 +49,5 @@ To logout, click on the 'Logout' option at the top right of the navigation bar.
 ## Video 
 Link to our video: 
 
-
-
+https://youtu.be/XRbT1U5tqJU
 
