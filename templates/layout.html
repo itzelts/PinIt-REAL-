@@ -22,26 +22,29 @@
 
     <body>
 
-        <nav class="border navbar navbar-expand-md navbar-light" style="background-color: #0096c7; text-decoration: none;">
+        <nav class="border navbar navbar-expand-md navbar-light" style="background-color: #0096c7;">
             <div class="container-fluid">
-                <a href="/" style="color: white; font-weight: bold; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-size: 80px;">PinIt!</span></a>
+                <a href="/" style="color: #90e0ef; font-weight: bold; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-size: 80px; margin-left: 30px;  text-decoration: none;">PinIt!</span></a>
                 <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-bs-target="#navbar" data-bs-toggle="collapse" type="button">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbar">
                     {% if session["user_id"] %}
                         <ul class="navbar-nav me-auto mt-2">
-                            <li class="nav-item"><a class="nav-link" href="/" style="font-weight: bold; font-size: 30px"> Locations </a></li>
-                            <li class="nav-item"><a class="nav-link" href="/leaderboard"> Leaderboard </a></li>
-                            <li class="nav-item"><a class="nav-link" href="/upload"> Upload </a></li>
+                            <li class="nav-item"><a class="nav-link" href="/" style="font-weight: bold; font-size: 25px; color: white; margin-left: 30px;">Locations </a></li>
+                            <li class="nav-item"><a class="nav-link" href="/leaderboard" style="font-weight: bold; font-size: 25px; color: white;"> Leaderboard </a></li>
+                            <li class="nav-item"><a class="nav-link" href="/upload" style="font-weight: bold; font-size: 25px; color: white;"> Upload </a></li>
                         </ul>
                         <ul class="navbar-nav ms-auto mt-2">
-                            <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/logout" style="font-size: 20px; font-weight: bold;
+                                color: white;">Log Out</a></li>
                         </ul>
                     {% else %}
                         <ul class="navbar-nav ms-auto mt-2">
-                            <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+                            <li class="nav-item"><a class="nav-link rl" href="/register" style="font-size: 20px; font-weight: bold;
+                                color: white;">Register</a></li>
+                            <li class="nav-item"><a class="nav-link" href="/login" style="font-size: 20px; font-weight: bold;
+                                color: white;">Log In</a></li>
                         </ul>
                     {% endif %}
                 </div>

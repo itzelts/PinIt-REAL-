@@ -5,20 +5,25 @@ Leaderboard
 {% endblock %}
 
 {% block main %}
-
-    <table class="w3-table-all w3-hoverabl">   
-        <tr style="color:aqua">
-            <th> Name</th>
-            <th> Description </th>
-            <th> Rank </th>
-        </tr>
-        {% for location in locations %}
-            <td>{{ location.name }}</td>
-            <td>{{ location.description }}</td>
-            <td>{{ location.rank }}</td>
-        
-        {& endfor %}
-        </tr>
-    </tbody>
-</table>
+<div class="center" style="margin-top: 50px">
+    <div class="flex-container _box">
+            <img class="image" style="width: 30%" src="{{ url_for('static', filename='leaderboard.png')}}">
+        <p class="center simple_text" style="padding-left: 40px; padding-right: 40px;"> Top Locations in Boston!</p>
+        <table class="center" id="table_" class="w3-table-all w3-hoverabl" style = "margin-bottom: 40px;">
+            <tr>
+                <th> Name</th>
+                <th> Description </th>
+                <th> Rank </th>
+            </tr>
+            {% for location in locations %}
+            <tr>
+                <td>{{ location.name }}</td>
+                <td>{{ location.description }}</td>
+                <td>{{ location.rank }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

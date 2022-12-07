@@ -6,29 +6,37 @@ Locations
 
 {% block main %}
 <style>
-    #map {
-      height: 700px;
-      width: 100%;
-     }
-  </style>
+  #map {
+    height: 700px;
+    width: 100%;
+  }
+</style>
 
-  <div id="map"></div>
-  <script>
-    function initMap() {
-      var test= {lat: 42.495, lng: -71.582};
-      var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 15,
-        center: test
-      });
+<div id="map"></div>
+<script>
+  function initMap() {
+    var harvard = { lat: 42.377, lng: -71.117 };
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 15,
+      center: harvard
+    });
+    var first_marker = new google.maps.Marker({
+      position: harvard,
+      map: map
+    });
+
+    // add markers
+    for (var i = 0; i < len(locations); i++) {
+      var point = { lat: lat[i], lng: long[i] };
       var marker = new google.maps.Marker({
-        position: test,
+        position: point,
         map: map
       });
     }
-  </script>
-  <script async defer
-  src=
-"https://maps.googleapis.com/maps/api/js?key=AIzaSyAI1DDkfTXXJy5v228MN0szhrwXdmKUFfc&callback=initMap">
+  }
+</script>
+<script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAI1DDkfTXXJy5v228MN0szhrwXdmKUFfc&callback=initMap">
   </script>
 
 {% endblock %}
