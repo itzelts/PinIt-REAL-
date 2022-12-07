@@ -6,18 +6,19 @@ Leaderboard
 
 {% block main %}
 
- {% for location in locations %}
     <table class="w3-table-all w3-hoverabl">   
         <tr style="color:aqua">
             <th> Name</th>
             <th> Description </th>
             <th> Rank </th>
         </tr>
+        {% for location in locations %}
             <td>{{ location.name }}</td>
             <td>{{ location.description }}</td>
             <td>{{ location.rank }}</td>
+        
+        {& endfor %}
         </tr>
-        {% endfor %}
     </tbody>
 </table>
 {% endblock %}
