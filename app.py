@@ -64,11 +64,15 @@ def login():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            return apology("must provide username", 403)
+            flash("must provide username")
+            return redirect("/upload")
+
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return apology("must provide password", 403)
+            flash("must provide password")
+            return redirect("/upload")
+
 
         # Query database for username
         rows = db.execute("SELECT * FROM users WHERE username = ?",
@@ -108,42 +112,52 @@ def register():
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            return apology("Must provide username", 400)
+            flash("Must provide username")
+            return redirect("/register")
 
         #if not request.form.get("email"):
             #return apology("Must provide email", 400)
 
         # Ensure username is not taken
         elif len(db.execute("SELECT * FROM users WHERE username=:username", username=request.form.get("username"))) != 0:
-            return apology("Username unavailable", 400)
+            flash("Username unavailable")
+            return redirect("/register")
 
         #elif not re.fullmatch(r"[^@]+@[^@]+\.[^@]+", request.form.get("email")):
             #return apology("Must enter a valid email", 400)
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return apology("Must provide password", 400)
+            flash("Must provide password")
+            return redirect("/register")
 
         # Ensure password meets requirements
         elif len(request.form.get("password")) < 8:
-            return apology("Password must be at least 8 characters long", 400)
+            flash("Password must be at least 8 characters long")
+            return redirect("/register")
+
 
         elif not any(char.isdigit() for char in request.form.get("password")):
-            return apology("Password must contain one number", 400)
+            flash("Password must contain one number")
+            return redirect("/register")
 
         elif not any(char.isupper() for char in request.form.get("password")):
-            return apology("Password must contain one uppercase character", 400)
+            flash("Password must contain one uppercase character")
+            return redirect("/register")
 
         elif not any(char.isalnum for char in request.form.get("password")):
-            return apology("Password must contain one special character", 400)
+            flash("Password must contain one special character")
+            return redirect("/register")
 
         # Ensure password was submitted
         elif not request.form.get("confirmation"):
-            return apology("Must confirm password", 400)
+            flash("Must confirm password")
+            return redirect("/register")
 
         # Ensure passwords match
         elif request.form.get("confirmation") != request.form.get("password"):
-            return apology("Passwords must match", 400)
+            flash("Passwords must match", 400)
+            return redirect("/register")
 
         # Hash password
         hash = generate_password_hash(request.form.get("password"))
@@ -172,13 +186,16 @@ def upload():
 
         # Ensure stock is selected
         if not request.form.get("name"):
-            return apology("Must input name", 400)
+            flash("Must input name")
+            return redirect("/upload")
 
         # Ensure user owns stock
         
         # Ensure shares is submitted
         elif not request.form.get("description"):
-            return apology("Must provide description", 400)
+            flash("Must provide description")
+            return redirect("/upload")
+
 
         g = geocoder.ip('me')
         lat = g.lat
